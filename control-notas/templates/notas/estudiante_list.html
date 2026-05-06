@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Estudiantes - Control de Notas{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people"></i> Estudiantes</h2>
+    <a href="{% url 'estudiante_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nuevo Estudiante
+    </a>
+</div>
+
+{% if estudiantes %}
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for est in estudiantes %}
+                    <tr>
+                        <td>
+                            {% if est.foto %}
+                                <img src="{{ est.foto.url }}" alt="{{ est.nombre }}" class="foto-thumb">
+                            {% else %}
+                                <span class="foto-thumb d-inline-flex align-items-center justify-content-center bg-secondary text-white">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'estudiante_detail' est.pk %}">{{ est.nombre }}</a>
+                        </td>
+                        <td>{{ est.email }}</td>
+                        <td>{{ est.telefono|default:"-" }}</td>
+                        <td class="text-center">
+                            <a href="{% url 'estudiante_detail' est.pk %}" class="btn btn-sm btn-info" title="Ver">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'estudiante_update' est.pk %}" class="btn btn-sm btn-warning" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'estudiante_delete' est.pk %}" class="btn btn-sm btn-danger" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> No hay estudiantes registrados.
+    <a href="{% url 'estudiante_create' %}">Crear el primero</a>.
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Control de Notas{% endblock %}
+
+{% block content %}
+<div class="hero-section rounded-3 text-center mb-4">
+    <h1><i class="bi bi-journal-bookmark-fill"></i> Control de Notas</h1>
+    <p class="lead">Sistema de gestion de estudiantes y evaluaciones</p>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="display-4 text-primary">{{ total_estudiantes }}</h2>
+                <p class="text-muted">Estudiantes registrados</p>
+                <a href="{% url 'estudiante_list' %}" class="btn btn-primary">
+                    <i class="bi bi-people"></i> Ver Estudiantes
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="display-4 text-success">{{ total_evaluaciones }}</h2>
+                <p class="text-muted">Evaluaciones registradas</p>
+                <a href="{% url 'evaluacion_list' %}" class="btn btn-success">
+                    <i class="bi bi-clipboard-check"></i> Ver Evaluaciones
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if ultimas_evaluaciones %}
+<div class="card">
+    <div class="card-header bg-white">
+        <h5><i class="bi bi-clock-history"></i> Ultimas Evaluaciones</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Curso</th>
+                        <th>Nota</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ev in ultimas_evaluaciones %}
+                    <tr>
+                        <td>{{ ev.estudiante.nombre }}</td>
+                        <td>{{ ev.curso }}</td>
+                        <td>
+                            <span class="badge {% if ev.nota >= 11 %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ ev.nota }}
+                            </span>
+                        </td>
+                        <td>{{ ev.fecha }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

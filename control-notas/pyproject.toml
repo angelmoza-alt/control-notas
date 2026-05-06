@@ -1,0 +1,13 @@
+[project]
+name = "control-notas"
+version = "1.0.0"
+description = "Control de Notas - Sistema CRUD Django con MySQL"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.0,<7.0",
+    "Pillow>=10.0",
+    "gunicorn>=21.0",
+    "whitenoise>=6.5",
+    "django-widget-tweaks>=1.5",
+    "dj-database-url>=2.1",
+]
